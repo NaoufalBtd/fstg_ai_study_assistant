@@ -25,7 +25,7 @@ const homeHeader: React.FC<homeHeaderProps> = () => {
       }}>
       <Avatar
         alt="Remy Sharp"
-        src="https://media.licdn.com/dms/image/D4E03AQGkSyFlaX9XlA/profile-displayphoto-shrink_800_800/0/1674326691712?e=1683763200&v=beta&t=yc5vJQ0m14RC69zocEd4gWQb0D-3aABRglHcHDGPKi8"
+        src="https://i.pravatar.cc/150?img=5"
         onClick={handleClick}
         size="lg"
         sx={{ cursor: "pointer", mr: 2, border: "1px solid #fff" }}

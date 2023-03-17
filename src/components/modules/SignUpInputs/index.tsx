@@ -41,6 +41,7 @@ export default function SignUpInputs({ onSignUp }: IProps) {
         email: formData.get("email"),
         password: formData.get("password"),
       });
+      toast("user created successfully");
       onSignUp();
     } catch (err) {
       console.log(err);

@@ -8,12 +8,11 @@ const ChatProfWidget: React.FC<ChatProfWidgetProps> = () => {
   const teachers = [
     {
       name: "Pr.Khadija",
-      avatar: "/avatar.jpg",
+      avatar: "https://i.pravatar.cc/150?img=1",
     },
     {
       name: "Pr.Youness",
-      avatar:
-        "https://media.licdn.com/dms/image/C4D03AQHhGQEK5ftTuw/profile-displayphoto-shrink_100_100/0/1586327978208?e=1683763200&v=beta&t=z-1r16-OhGDOHCb2Y6DNKcE3xRO63v6HhU0aZKZ7ErQ",
+      avatar: "https://i.pravatar.cc/150?img=3",
     },
   ];
   return (
