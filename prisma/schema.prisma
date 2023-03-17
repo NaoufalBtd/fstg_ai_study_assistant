@@ -8,26 +8,25 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
   fullName  String
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   avatar    String?
+  id        Int      @id @default(autoincrement())
   Chat      Chat[]
 }
 
 model Module {
-  id          Int      @id @default(autoincrement())
   name        String   @unique
   slug        String   @unique
   description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
   teacherIds  Int[]
-  // teachers    Teacher[] @relation("teacher_modules", fields: [teacherIds], references: [id])
-  Chat        Chat[]   @relation("chat_modules")
+  Chat        Chat[]
 }
 
 model Major {
@@ -40,13 +39,13 @@ model Major {
 
 model Chat {
   id        Int       @id @default(autoincrement())
-  moduleId  Int
-  userId    Int
   title     String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  module    Module?   @relation("chat_modules", fields: [moduleId], references: [id])
-  user      User?     @relation(fields: [userId], references: [id])
+  moduleId  Int
+  userId    Int
+  module    Module    @relation(fields: [moduleId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
   messages  Message[]
 }
 
@@ -66,7 +65,6 @@ model Teacher {
   fullName String
   jobTitle String
   avatar   String?
-  // modules  Module[] @relation("teacher_modules")
 }
 
 enum Sender {

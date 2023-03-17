@@ -1,13 +1,10 @@
 import useUiStore from "@/stores/uiStore";
 import { Box, Grid } from "@mui/joy";
 import React from "react";
-import SimpleBar from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
 import useChatDrawer from "../../hooks/useChatDrawer";
 import AppNavbar from "../modules/AppNavbar";
-import ChatFooter from "../modules/ChatFooter";
-import ChatHeader from "../modules/ChatHeader";
-import ChatMessagesPane from "../modules/ChatMessagesPane";
+import ChatPane from "../modules/ChatPane";
 import ChatProfWidget from "../modules/ChatProfWidget";
 import ChatSidebar from "../modules/ChatSidebar";
 import SavedMessageWidget from "../modules/SavedMessageWidget";
@@ -31,7 +28,7 @@ const ChatTemplate: React.FC<ChatProps> = () => {
         spacing={3}
         sx={{
           position: "relative",
-          // height: '100%',
+          height: `calc(100vh - ${navbarHeight}px)`,
           margin: 0,
           ...(drawerOpen
             ? {
@@ -44,22 +41,11 @@ const ChatTemplate: React.FC<ChatProps> = () => {
           xs={12}
           md={8}
           sx={{
-            height: `calc(100vh - ${navbarHeight}px)`,
-            // height: "100%",
+            height: "100%",
             position: "relative",
             borderRadius: "10px 10px 0 0 ",
           }}>
-          <ChatHeader />
-          <SimpleBar
-            style={{
-              // minHeight: `calc(100vh - ${navbarHeight}px)`,
-              height: "100%",
-              position: "relative",
-            }}>
-            <ChatMessagesPane />
-          </SimpleBar>
-
-          <ChatFooter />
+          <ChatPane />
         </Grid>
         <Grid xs={12} md={4}>
           <ChatProfWidget />

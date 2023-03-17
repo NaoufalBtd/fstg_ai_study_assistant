@@ -20,6 +20,7 @@ interface ChatItemProps {
 }
 
 const ChatListItem: React.FC<ChatItemProps> = ({ id, title, lastSentDate }) => {
+  //todo: handle the delete and edit buttons
   const [isHover, setIsHover] = useState(false);
   const { setChatMessages, chatId, selectChat } = useChatRoomStore();
   const isActiveChat = chatId === id;
@@ -28,7 +29,7 @@ const ChatListItem: React.FC<ChatItemProps> = ({ id, title, lastSentDate }) => {
     console.log("clicked");
     try {
       const chat = await axios.get<{ payload: { messages: Message[] } }>(
-        `/api/message/${id}`,
+        `/api/messages/${id}`,
         {
           withCredentials: true,
         }
@@ -40,17 +41,24 @@ const ChatListItem: React.FC<ChatItemProps> = ({ id, title, lastSentDate }) => {
 
   return (
     <ListItem
+      sx={{ mx: 2, borderRadius: 10, mb: 2 }}
       endAction={
         isHover && (
           <Box sx={{ alignItems: "center", display: "flex" }}>
-            <EditIcon sx={{ mr: 1, cursor: "pointer" }} />
-            <DeleteIcon sx={{ cursor: "pointer" }} />
+            <EditIcon
+              sx={{ mr: 1, cursor: "pointer", color: "primary.softColor" }}
+            />
+            <DeleteIcon
+              sx={{ cursor: "pointer", color: "primary.softColor" }}
+            />
           </Box>
         )
       }>
       <ListItemButton
+        variant={isActiveChat ? "soft" : "plain"}
         selected={isActiveChat}
         onClick={handleChatSelection}
+        sx={{ borderRadius: 10 }}
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}>
         <ListItemDecorator>
@@ -62,14 +70,14 @@ const ChatListItem: React.FC<ChatItemProps> = ({ id, title, lastSentDate }) => {
             width: "100%",
             display: "flex",
           }}>
-          <Typography level="body1" sx={{ color: "white" }}>
+          <Typography width={"80%"} color="primary.softColor" noWrap>
             Untitled chat
           </Typography>
-          {!isHover && (
+          {/* {!isHover && (
             <Typography sx={{ color: "white", fontSize: "xs" }}>
               13 Dec
             </Typography>
-          )}
+          )} */}
         </Box>
       </ListItemButton>
     </ListItem>

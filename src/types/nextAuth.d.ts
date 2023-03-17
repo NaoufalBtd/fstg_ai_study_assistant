@@ -8,12 +8,8 @@ declare module "next-auth" {
       name?: string | undefined;
       email?: string | undefined;
       image?: string | undefined;
-      fullName?: string | undefined | JWT;
     };
     accessToken?: string | undefined;
-  }
-  export interface User extends DefaultUser {
-    fullName?: string | undefined;
   }
 }
 

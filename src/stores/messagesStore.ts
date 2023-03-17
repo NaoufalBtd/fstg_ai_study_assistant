@@ -17,6 +17,16 @@ const useChatRoomStore = create<ChatRoomStore>((set) => ({
     set((state) => ({
       chats: state.chats.filter((chat) => chat.id !== chatId),
     })),
+  toggleMessageFavorite: (messageId: Message["id"]) => {
+    set((state) => ({
+      chatMessages: state.chatMessages.map((message) => {
+        if (message.id === messageId) {
+          return { ...message, isSaved: !message.isSaved };
+        }
+        return message;
+      }),
+    }));
+  },
   clearChats: () => set(() => ({ chats: [] })),
   selectChat: (chatId, chatMessages) => set(() => ({ chatId, chatMessages })),
   addChatMessage: (message) =>
@@ -33,6 +43,7 @@ interface ChatRoomStore {
   setCourseModule: (courseModule: CourseModule, chats: Chat[]) => void;
   chatMessages: Message[];
   addChatMessage: (message: Message) => void;
+  toggleMessageFavorite: (messageId: Message["id"]) => void;
   setChatMessages: (messages: Message[]) => void;
   deleteChat: (chatId: string) => void;
   clearChats: () => void;

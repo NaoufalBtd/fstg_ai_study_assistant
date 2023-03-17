@@ -1,4 +1,4 @@
-import HomeCard from "@/components/modules/HomeCard";
+import HomeCard from "@/components/modules/ModuleCard";
 import { GRADIENT_COLORS } from "@/constants/ui";
 import prisma from "@/lib/prisma";
 import { Box, Container, Grid, Typography } from "@mui/joy";

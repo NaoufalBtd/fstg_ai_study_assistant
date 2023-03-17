@@ -18,7 +18,7 @@ export default async function handler(
     if (!chatId) {
       const chat = await prisma.chat.create({
         data: {
-          userId: parseInt(1),
+          userId,
           moduleId,
           title: "",
         },

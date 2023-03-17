@@ -22,11 +22,11 @@ interface Props {
 }
 
 const Chat: React.FC<Props> = ({ chats, courseModule }) => {
-  // console.log("chats", chats);
   const { setCourseModule } = useChatRoomStore();
+
   useEffect(() => {
     setCourseModule(courseModule, chats);
-  }, [chats, courseModule, setCourseModule]);
+  }, []);
 
   return <ChatTemplate />;
 };
@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps<
   }
   try {
     if (!session.user.id) throw new Error("No user session found");
-    courseModule = await prisma.module.findUnique({
+    courseModule = await prisma.module.findFirst({
       where: {
         slug: moduleName,
       },
@@ -76,9 +76,11 @@ export const getServerSideProps: GetServerSideProps<
   } catch (err) {
     return { props: {} };
   }
-
   return {
-    props: { chats, courseModule },
+    props: {
+      chats: chats,
+      courseModule: courseModule,
+    },
   };
 };
 

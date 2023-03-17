@@ -4,6 +4,7 @@ import React from "react";
 interface ChatProfWidgnetProps {}
 
 const ChatProfWidget: React.FC<ChatProfWidgetProps> = () => {
+  //todo: get teachers and bot name from the backend
   const teachers = [
     {
       name: "Pr.Khadija",
@@ -22,7 +23,7 @@ const ChatProfWidget: React.FC<ChatProfWidgetProps> = () => {
           sx={{ marginRight: 2, ml: 3 }}
           src="https://media.istockphoto.com/id/1250000899/vector/chat-bot-robot-avatar-in-circle-round-shape-isolated-on-white-background-stock-vector.jpg?s=612x612&w=0&k=20&c=xj8GkmfFYH_Frho_pJ0HL2dkDwbZAI0Of6KwKdVsh1s="
         />
-        <Typography level="body1">Einstein Bot</Typography>
+        <Typography level="body1">FSTG Bot</Typography>
       </Box>
       <Typography level="body1" mb={2}>
         Teached By:{" "}

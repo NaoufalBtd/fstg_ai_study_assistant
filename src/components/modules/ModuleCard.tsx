@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/joy";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import useChatRoomStore from "../../stores/messagesStore";
 
 interface HomeGridProps {
   title: string;
@@ -14,7 +13,7 @@ interface HomeGridProps {
 const HomeCard: React.FC<HomeGridProps> = ({ title, bg, id, slug, index }) => {
   const router = useRouter();
   const [isHover, setIsHover] = useState(false);
-  const { setCourseModule } = useChatRoomStore();
+
   const handleSelectingModule = () => {
     router.push(`/chat/${slug}`);
   };

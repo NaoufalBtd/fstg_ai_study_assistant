@@ -17,8 +17,8 @@ import {
 } from "@mui/joy";
 import { useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
-import ChatDeleteModal from "./modals/ChatDelete";
-import ChatRenameModal from "./modals/ChatRename";
+import ChatDeleteModal from "../modals/ChatDelete";
+import ChatRenameModal from "../modals/ChatRename";
 
 interface ChatHeaderProps {}
 
@@ -37,6 +37,7 @@ const ChatMenu: React.FC<ChatHeaderMenu> = ({
   handleRenameChatOpen,
   handleDeleteChatOpen,
 }) => {
+  //todo: implement menu functionalities
   return (
     <Menu
       id="positioned-demo-menu"
@@ -67,6 +68,7 @@ const ChatMenu: React.FC<ChatHeaderMenu> = ({
 };
 
 const ChatHeader: React.FC<ChatHeaderProps> = () => {
+  //todo: implement search functionality
   const theme = useTheme();
   const { chatId, chats } = useChatRoomStore();
   const [anchorEl, setAnchorEl] = useState(null);

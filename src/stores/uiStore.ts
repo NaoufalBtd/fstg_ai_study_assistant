@@ -6,6 +6,8 @@ const useUiStore = create<UiStore>((set) => ({
   setMode: (mode) => set(() => ({ mode })),
   navbarHeight: 0,
   setNavbarHeight: (navHeight) => set(() => ({ navbarHeight: navHeight })),
+  isAddingChat: false,
+  setIsAddingChat: (isAddingChat) => set(() => ({ isAddingChat })),
 }));
 
 interface UiStore {
@@ -13,6 +15,8 @@ interface UiStore {
   setMode: (mode: "light" | "dark") => void;
   navbarHeight: number;
   setNavbarHeight: (navHeight: number) => void;
+  isAddingChat: boolean;
+  setIsAddingChat: (isAddingChat: boolean) => void;
 }
 
 export default useUiStore;

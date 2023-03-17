@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import { handleError, handleResponse } from "@/utils/apiHandlers";
-import { capitalize } from "@/utils/textFormat";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -13,14 +12,17 @@ export default async function handler(
   }
   const { title, userId, moduleId } = req.body;
   try {
-    await prisma.chat.create({
+    if (!userId) throw new Error("The user id should be valid");
+    if (!moduleId) throw new Error("The module id should be valid");
+
+    const createdChat = await prisma.chat.create({
       data: {
-        title: capitalize(title),
-        userId: userId,
-        moduleId: moduleId,
+        moduleId: parseInt(moduleId),
+        title,
+        userId: parseInt(userId),
       },
     });
-    handleResponse(res, { message: "Chat created successfully" });
+    handleResponse(res, createdChat);
   } catch (error) {
     console.error(error);
     handleError(res, { msg: "Error creating module" }, 500);

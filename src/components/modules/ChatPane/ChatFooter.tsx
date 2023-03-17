@@ -1,11 +1,11 @@
-import useUserStore from "@/stores/userStore";
-import SendIcon from "@mui/icons-material/Send";
-import { Box, CircularProgress, Input } from "@mui/joy";
+import useChatRoomStore from "@/stores/messagesStore";
+import SendIcon from "@mui/icons-material/SendRounded";
+import { Box, CircularProgress, IconButton, Input } from "@mui/joy";
 import { Message } from "@prisma/client";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 
-import useChatRoomStore from "../../stores/messagesStore";
 interface ChatFooterProps {}
 
 const ChatFooter: React.FC<ChatFooterProps> = () => {
@@ -13,22 +13,22 @@ const ChatFooter: React.FC<ChatFooterProps> = () => {
   const [disabled, setDisabled] = useState(false);
   const { addChatMessage, courseModule, chatId, selectChat } =
     useChatRoomStore();
-  const { user } = useUserStore();
-  console.log("userId", user?.id);
+  const { data: session } = useSession();
 
   const handleMessageSubmit = async () => {
     setDisabled(true);
     setMessage("");
 
-    if (!courseModule) throw new Error("No course module selected");
-
     try {
+      if (!courseModule) throw new Error("No course module selected");
+      if (!session?.user.id) throw new Error("No user logged in");
+
       const response = await axios.post<{
         payload: { userMsg: Message; botMsg: Message };
       }>("http://localhost:3000/api/message/new", {
         content: message,
         chatId,
-        userId: user?.id,
+        userId: session?.user.id,
         moduleId: courseModule.id,
       });
       if (!response.data.payload.userMsg)
@@ -83,10 +83,11 @@ const ChatFooter: React.FC<ChatFooterProps> = () => {
                 sx={{ bgcolor: "background.surface" }}
               />
             ) : (
-              <SendIcon
+              <IconButton
                 onClick={handleMessageSubmit}
-                sx={{ cursor: "pointer" }}
-              />
+                sx={{ borderRadius: 10, ":hover": { color: "inherit" } }}>
+                <SendIcon sx={{ color: "inherit" }} />
+              </IconButton>
             )
           }
           disabled={disabled}

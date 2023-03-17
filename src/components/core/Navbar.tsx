@@ -1,7 +1,7 @@
-import useUserStore from "@/stores/userStore";
 import DarkMode from "@mui/icons-material/DarkMode";
 import { Avatar, Box, Typography } from "@mui/joy";
 import Switch from "@mui/joy/Switch";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
 import NavItem from "./NavItem";
@@ -14,12 +14,13 @@ const Navbar: React.FC<NavbarProps> = React.forwardRef<
   HTMLDivElement,
   NavbarProps
 >((props, ref) => {
+  const { data: session } = useSession();
+
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Chat", path: "/about" },
     { name: "Setting", path: "/contact" },
   ];
-  const { user } = useUserStore();
 
   return (
     <Box padding={3} borderBottom="2px solid black" ref={ref}>
@@ -29,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = React.forwardRef<
           alignItems: "center",
           justifyContent: "space-between",
         }}>
-        <Image width="110" height="80" src="/logo.png" alt="App Logo Image" />
+        <Image width="60" height="35" src="/logo.png" alt="App Logo Image" />
         <Box sx={{ display: "flex", alignItems: "center" }}>
           {navLinks.map((link) => {
             const { name, path } = link;
@@ -54,13 +55,9 @@ const Navbar: React.FC<NavbarProps> = React.forwardRef<
           {/* User Avatar */}
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Typography level="body1" sx={{ mr: 2 }}>
-              Naoufal BTD
+              {session?.user?.name}
             </Typography>
-            <Avatar
-              src="https://media.licdn.com/dms/image/D4E03AQGkSyFlaX9XlA/profile-displayphoto-shrink_800_800/0/1674326691712?e=1683763200&v=beta&t=yc5vJQ0m14RC69zocEd4gWQb0D-3aABRglHcHDGPKi8"
-              // onClick={handleClick}
-              // size="lg"
-            />
+            <Avatar src="https://i.pravatar.cc/150?img=3" />
           </Box>
         </Box>
       </Box>

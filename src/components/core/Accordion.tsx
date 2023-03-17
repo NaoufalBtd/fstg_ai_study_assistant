@@ -1,9 +1,9 @@
 import { Message } from "@/types";
-import { shortenString } from "@/utils/textFormat";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import StarBorderIcon from "@mui/icons-material/Star";
-import { Box, Card, Typography } from "@mui/joy";
+import { Box, Button, Card, Typography } from "@mui/joy";
 import React, { useState } from "react";
+import SimpleBar from "simplebar-react";
 import FlexBox from "./FlexBox";
 
 interface AccordionProps {
@@ -39,11 +39,18 @@ const CustomAccordion: React.FC<AccordionProps> = ({ title, messages }) => {
       </Box>
       {expanded && (
         <Box sx={{ marginTop: "10px" }}>
-          {messages.map((message) => (
-            <Box key={message.id}>
-              <p style={{ margin: "0" }}>{shortenString(message.content)}</p>
-            </Box>
-          ))}
+          <SimpleBar style={{ height: "30vh" }}>
+            {messages.map((message) => (
+              <Button
+                variant="outlined"
+                sx={{ width: "100%", mb: 2 }}
+                key={message.id}>
+                <Typography style={{ margin: "0" }} noWrap>
+                  {message.content}
+                </Typography>
+              </Button>
+            ))}
+          </SimpleBar>
         </Box>
       )}
     </Card>

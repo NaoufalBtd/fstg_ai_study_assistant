@@ -15,7 +15,6 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("hitted");
         const res = await axios.post<IUser>(
           `http://localhost:3000/api/user/login`,
           {
@@ -45,14 +44,14 @@ export default NextAuth({
       if (user) {
         token.email = user.email;
         token.id = user.id;
-        token.name = user.fullName;
+        token.name = user.name;
       }
       return token;
     },
     async session({ token, session }) {
       if (session?.user) {
         session.user.id = token.id;
-        session.user.name = token.name;
+        session.user.name = token.name || "";
         session.accessToken = token.accessToken;
       }
       return session;

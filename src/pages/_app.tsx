@@ -2,18 +2,27 @@ import {
   CssBaseline,
   CssVarsProvider,
   extendTheme,
-  ThemeProvider
+  ThemeProvider,
 } from "@mui/joy";
-import 'animate.css';
+import "animate.css";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import React from "react";
 import { Toaster } from "react-hot-toast";
 
-
 const theme = extendTheme({
-  colorSchemes: {},
+  colorSchemes: {
+    dark: {
+      palette: {
+        focusVisible: "#f3fc8a",
+        primary: {
+          softBg: "#f3fc8a",
+          softColor: "#000",
+        },
+      },
+    },
+  },
 });
 const MyApp = ({
   Component,

@@ -16,6 +16,7 @@ const PolyfillDrawer: React.FC<PolyfillDrawerProps> = ({
   onClose,
   children,
 }) => {
+  //todo: fix drawer in mobile
   const handleClose = () => {
     if (onClose) {
       onClose();
@@ -51,9 +52,6 @@ const PolyfillDrawer: React.FC<PolyfillDrawerProps> = ({
 
   return (
     <>
-      {variant === "temporary" && (
-        <button onClick={handleClose}>Close Drawer</button>
-      )}
       <Box sx={drawerStyle}>
         {variant === "temporary" && (
           <button onClick={handleClose}>Close Drawer</button>

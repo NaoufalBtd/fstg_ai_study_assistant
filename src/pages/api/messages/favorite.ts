@@ -10,17 +10,17 @@ export default async function handler(
     res.status(405).json({ message: "Method not allowed" });
     return;
   }
-  const { id, chatId, userId } = req.body;
+  const { id, isSaved } = req.body;
   try {
     await prisma.message.update({
       where: {
         id,
       },
       data: {
-        isSaved: true,
+        isSaved,
       },
     });
-    handleResponse(res, { message: "Module created successfully" });
+    handleResponse(res, { message: "Message updated successfully" });
   } catch (error) {
     console.error(error);
     handleError(res, { msg: "Error creating module" }, 500);

@@ -1,3 +1,4 @@
+import useUiStore from "@/stores/uiStore";
 import { Add } from "@mui/icons-material";
 import {
   Box,
@@ -9,22 +10,44 @@ import {
   ListItemDecorator,
   Typography,
 } from "@mui/joy";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 import { useState } from "react";
 import useChatDrawer from "../../../hooks/useChatDrawer";
 import useChatRoomStore from "../../../stores/messagesStore";
 import PolyfillDrawer from "../../core/Drawer";
 import ChatListItem from "./ChatListItem";
+import ListItemSkeleton from "./listItemSkeleton";
+
+//todo: add a scrollable list of chats
 
 const ChatSidebar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { drawerVariant, drawerWidth, drawerOpen } = useChatDrawer();
-  const { courseModule, chats, selectChat } = useChatRoomStore();
+  const { data: session } = useSession();
+  const { courseModule, chats, selectChat, addChat } = useChatRoomStore();
+  const { isAddingChat, setIsAddingChat } = useUiStore();
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const handleAddingChat = () => {
-    selectChat("", []);
+  const handleAddingChat = async () => {
+    if (session?.user?.id === undefined) throw new Error("User not logged in");
+    if (courseModule?.id === undefined)
+      throw new Error("No course module found");
+
+    setIsAddingChat(true);
+    const newChat = await axios.post("/api/chats/new", {
+      userId: session?.user.id,
+      moduleId: courseModule?.id,
+      title: "Untitled Chat",
+    });
+
+    addChat(newChat.data.payload);
+    selectChat(newChat.data.payload.id, []);
+
+    setIsAddingChat(false);
   };
   const drawer = (
     <div>
@@ -83,7 +106,7 @@ const ChatSidebar = () => {
             /> */}
           </Box>
           <Divider />
-          {drawer}
+          {isAddingChat ? <ListItemSkeleton /> : drawer}
           <List>
             <ListItem>
               <ListItemButton onClick={handleAddingChat}>

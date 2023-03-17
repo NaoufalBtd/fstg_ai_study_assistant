@@ -1,12 +1,15 @@
-import { Avatar, Container, Menu, MenuItem, Typography } from '@mui/joy';
-import React from 'react';
+import { Avatar, Container, Menu, MenuItem, Typography } from "@mui/joy";
+import { useSession } from "next-auth/react";
+import React, { useState } from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface homeHeaderProps {}
 
 const homeHeader: React.FC<homeHeaderProps> = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const { data: session } = useSession();
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
@@ -17,25 +20,23 @@ const homeHeader: React.FC<homeHeaderProps> = () => {
     <Container
       sx={{
         pt: 5,
-        display: 'flex',
-        alignItems: 'center',
-      }}
-    >
+        display: "flex",
+        alignItems: "center",
+      }}>
       <Avatar
         alt="Remy Sharp"
         src="https://media.licdn.com/dms/image/D4E03AQGkSyFlaX9XlA/profile-displayphoto-shrink_800_800/0/1674326691712?e=1683763200&v=beta&t=yc5vJQ0m14RC69zocEd4gWQb0D-3aABRglHcHDGPKi8"
         onClick={handleClick}
         size="lg"
-        sx={{ cursor: 'pointer', mr: 2, border: '1px solid #fff' }}
+        sx={{ cursor: "pointer", mr: 2, border: "1px solid #fff" }}
       />
-      <Typography level="h5">Welcome Back, Naoufal Boutadarhart</Typography>
+      <Typography level="h5">Welcome Back, {session?.user?.name}</Typography>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        aria-labelledby="basic-demo-button"
-      >
+        aria-labelledby="basic-demo-button">
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <MenuItem onClick={handleClose}>Logout</MenuItem>
