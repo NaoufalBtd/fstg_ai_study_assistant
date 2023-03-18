@@ -9,8 +9,8 @@ const aiAnswer = async (message: string) => {
   try {
     const pinecone = new PineconeClient();
     await pinecone.init({
-      apiKey: "4e4ffb8f-607d-4063-9a74-ee335eb3e671",
-      environment: "us-east1-gcp",
+      apiKey: process.env.PINECONE_API_KEY,
+      environment: process.env.PINECONE_API_ENV,
     });
 
     const index = pinecone.Index("fstg");
